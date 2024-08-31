@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer( // ---> package, read: https://pub.dev/packages/responsive_sizer
       builder: (context, orientation, screenType) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.primary),
             useMaterial3: true,
@@ -29,3 +30,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// change app icon:
+// android/app/src/main/res/ icons are in minmap folders, change them, online generator
+// windows/runner/resources/ change app_icon.ico

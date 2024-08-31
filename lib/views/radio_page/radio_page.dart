@@ -18,16 +18,15 @@ class _RadioPageState extends State<RadioPage> {
   List<RadioModel>? radioList;
   RadioModel? currentPlayingRadio;
   RadioPlayer radioPlayer = RadioPlayer();
-  bool isPlaying = false;
+  bool _isPlaying = false;
 
   bool get isRadioSelected => currentPlayingRadio != null;
 
   @override
   void initState() {
-    radioPlayer.stateStream.listen((value) {
-      setState(() {
-        isPlaying = value;
-      });
+    radioPlayer.stateStream.listen((value){
+      _isPlaying = value;
+      setState(() {});
     });
     // get(Uri.parse("http://10.0.2.2:8000/radios")).then((response) {
     // or "http://127.0.0.1:8000/radios"
@@ -38,7 +37,6 @@ class _RadioPageState extends State<RadioPage> {
     radioList = radioList2;
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -78,10 +76,11 @@ class _RadioPageState extends State<RadioPage> {
                 SizedBox(
                     width: 55.w,
                     child: Text(
-                      currentPlayingRadio!.title ?? "No title Available",
+                      "${currentPlayingRadio!.serial}. ${currentPlayingRadio!.title ?? "No title Available"}",
                       style: textTheme.titleLarge,
                       textAlign: TextAlign.center,
-                    )),
+                    ),
+                ),
                 const SizedBox(height: 4),
                 SizedBox(
                   width: 55.w,
@@ -102,7 +101,7 @@ class _RadioPageState extends State<RadioPage> {
                     Image.asset("assets/l_rewind.png"),
                     GestureDetector(
                       onTap: () {
-                        if (isPlaying) {
+                        if (_isPlaying) {
                           radioPlayer.pause();
                         } else {
                           radioPlayer.play();
@@ -120,7 +119,7 @@ class _RadioPageState extends State<RadioPage> {
                               offset: const Offset(0, 2))
                         ], shape: BoxShape.circle, color: CustomColors.primary),
                         child: Icon(
-                          isPlaying?Icons.pause:Icons.play_arrow_rounded,
+                          _isPlaying?Icons.pause:Icons.play_arrow_rounded,
                           color: Colors.white,
                           size: 32,
                         ),
@@ -148,14 +147,15 @@ class _RadioPageState extends State<RadioPage> {
                     : ListView.separated(
                         itemBuilder: (context, index) => CustomRadioListTile(
                               radio: radioList![index],
-                              isPlaying: false,
+                              isPlaying: false, //_isPlaying,
                               onTap: () {
                                 final radio = radioList![index];
                                 currentPlayingRadio = radio;
                                 radioPlayer.setChannel(
                                     title: radio.title ?? "",
                                     url: radio.audioUrl ?? "",
-                                    imagePath: radio.image);
+                                    imagePath: radio.image
+                                );
                                 radioPlayer.play();
                                 setState(() {});
                               },

@@ -29,14 +29,26 @@ class CustomRadioListTile extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(radio.serial??'', style: textTheme.bodyMedium?.copyWith(color: isPlaying? CustomColors.primary:null),),
+            Text(
+              radio.serial??'',
+              style: textTheme.bodyMedium?.copyWith(
+                  color: isPlaying? CustomColors.primary:null,
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(radio.title??'No title available', style: const TextStyle(fontWeight: FontWeight.bold,),),
-                  Text(radio.subtitle??'No information available', maxLines:1, overflow: TextOverflow.ellipsis),
+                  Text(
+                    radio.title??'No title available',
+                    style: const TextStyle(fontWeight: FontWeight.bold,),
+                  ),
+                  Text(
+                      radio.subtitle??'No information available',
+                      maxLines:1,
+                      overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
